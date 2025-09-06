@@ -37,7 +37,7 @@ def main():
     create_table()
     while True:
         menu()
-        choice = input("Select an option (1-19): ")
+        choice = input("Select an option (1-3): ")
         user=UserService()
         
         if choice == '1':
@@ -65,7 +65,7 @@ def main():
                     charge_service = ChargeService()
                     while True:
                         menuAdmin()
-                        choice = input("Select an option (1-7): ")
+                        choice = input("Select an option (1-8): ")
                         if choice == '1':
                             car_service.view_cars()
                         elif choice == '2':

@@ -10,9 +10,18 @@ class BookingService():
         if bookings:
             print("\n***** View Bookings *****")
             for booking in bookings:
-                print(f"Booking ID: {booking[0]}, Customer ID: {booking[1]}, Car ID: {booking[2]}, Start Date: {booking[3]}, End Date: {booking[4]}, Status: {booking[5]}")
+                print(f"Booking ID: {booking[0]}, Customer ID: {booking[1]}, Car ID: {booking[2]}, Start Date: {booking[3]}, End Date: {booking[4]}, Status: {booking[5]}, Days: {booking[10]}, Amount: {booking[11]}")              
         else:
             print("No bookings")
+    # Call pending Records View function
+    def view_bookings_pending(self):
+        bookings = self.booking.view_bookings_pending()
+        if bookings:
+            print("\n***** View Bookings *****")
+            for booking in bookings:
+                print(f"Booking ID: {booking[0]}, Customer ID: {booking[1]}, Car ID: {booking[2]}, Start Date: {booking[3]}, End Date: {booking[4]}, Status: {booking[5]}, Days: {booking[10]}, Amount: {booking[11]}")              
+        else:
+            print("No bookings")                 
     # Call Record Add function
     def add_booking(self, CustID, CarID, StartDate, EndDate, CreatedBy):
         try:
@@ -52,3 +61,7 @@ class BookingService():
                 print(f"Booking ID: {bookingRec[0]}, Customer ID: {bookingRec[1]}, Car ID: {bookingRec[2]}, Start Date: {bookingRec[3]}, End Date: {bookingRec[4]}, Status: {bookingRec[5]}, Extra Days: {bookingRec[6]}, Extra Charge: ${bookingRec[7]:.2f}")
         else:
             print("No overdue bookings found.")
+
+    # Call Payment Amount
+    def get_amount(self, BookId):
+        return self.booking.get_amount(BookId) 

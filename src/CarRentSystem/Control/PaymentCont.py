@@ -4,18 +4,18 @@ class PaymentService():
     def __init__(self):
         self.payment = SysPayment()
     # Call Record Add function
-    def add_payment(self, BookID, Amount, Status, CreatedBy):
+    def add_payment(self, BookID, Amount, CreatedBy):
         try:
             Amount = float(Amount)
         except ValueError:
             print("Error: Invalid Amount ")
             return
 
-        if not all([BookID, Amount, Status, CreatedBy]):
+        if not all([BookID, Amount, CreatedBy]):
             print("Error: All fields are required.")
             return
         
-        self.payment.add_payment(BookID, Amount, Status, CreatedBy)
+        self.payment.add_payment(BookID, Amount, '1', CreatedBy)
     # Call Record Update function
     def update_status(self, PayID, Status):
         if Status not in ['1', '2']:

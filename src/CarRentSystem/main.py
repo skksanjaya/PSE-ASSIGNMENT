@@ -63,6 +63,7 @@ def main():
                     car_service = CarService()
                     booking_service = BookingService()
                     charge_service = ChargeService()
+                    payment_service = PaymentService()
                     while True:
                         menuAdmin()
                         choice = input("Select an option (1-8): ")
@@ -93,10 +94,13 @@ def main():
                             CarID = input("Enter Car ID to delete: ")
                             car_service.delete_car(CarID)
                         elif choice == '5':
-                            booking_service.view_bookings()
+                            booking_service.view_bookings_pending()                            
                             BookID = input("Enter Booking ID to update status: ")
                             status = input("Enter new status ('2-approved/3-rejected'): ")
-                            booking_service.update_status(BookID, status, logged_id)
+                            booking_service.update_status(BookID, status, logged_id) 
+                            if (status=='2'):
+                                Amount=booking_service.get_amount(BookID)  
+                                payment_service.add_payment(int(BookID),float(Amount[0]),logged_id)
                         elif choice == '6':
                             booking_service.Current_bookings()
                             BookID = input("Enter Booking ID to complete: ")

@@ -12,7 +12,7 @@ class SysPayment():
                 (BookID, Amount, Status, CreatedBy)
             )
             conn.commit()
-            print("Payment added!")
+            print("Payment added and sent!")
         except sqlite3.Error as e:
             print(f"SQL error: {e}")
         finally:

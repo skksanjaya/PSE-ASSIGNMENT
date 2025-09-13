@@ -7,14 +7,59 @@ class SysBooking():
         conn = create_connection()
         cursor = conn.cursor()
         try:
-            cursor.execute("SELECT * FROM SysBooking")
-            bookings = cursor.fetchall()
-            return bookings
+            #cursor.execute("SELECT * FROM SysBooking")
+            #bookings = cursor.fetchall()
+            #return bookings
+            query = """
+                SELECT 
+                    T1.*, 
+                    CAST(JULIANDAY(T1.EndDate) - JULIANDAY(T1.StartDate) AS INTEGER) AS Days, 
+                    (JULIANDAY(T1.EndDate) - JULIANDAY(T1.StartDate)) * T2.DailyRate AS Amount
+                FROM 
+                    SysBooking AS T1
+                INNER JOIN 
+                    SysCar AS T2 ON T1.CarID = T2.CarID
+            """
+
+            cursor.execute(query)
+            return cursor.fetchall()
         except sqlite3.Error as e:
             print(f"SQL error: {e}")
             return None
         finally:
             conn.close()
+
+    # View List pending
+    def view_bookings_pending(self):
+        conn = create_connection()
+        cursor = conn.cursor()
+        try:
+            #cursor.execute("SELECT * FROM SysBooking")
+            #bookings = cursor.fetchall()
+            #return bookings
+
+            query = """
+                SELECT 
+                    T1.*, 
+                    CAST(JULIANDAY(T1.EndDate) - JULIANDAY(T1.StartDate) AS INTEGER) AS Days, 
+                    (JULIANDAY(T1.EndDate) - JULIANDAY(T1.StartDate)) * T2.DailyRate AS Amount
+                FROM 
+                    SysBooking AS T1
+                INNER JOIN 
+                    SysCar AS T2 ON T1.CarID = T2.CarID
+                where T1.Status=1
+            """
+
+            cursor.execute(query)
+            return cursor.fetchall()
+        except sqlite3.Error as e:
+            print(f"SQL error: {e}")
+            return None
+        finally:
+            conn.close()
+
+
+
      # Add record 
     def add_booking(self, CustID, CarID, StartDate, EndDate, CreatedBy):
         conn = create_connection()
@@ -46,7 +91,7 @@ class SysBooking():
                     (Status, BookID)
                 )
             conn.commit()
-            print("Updated successfully.")
+            print("Booking status updated successfully.")
         except sqlite3.Error as e:
             print(f"SQL error: {e}")
         finally:
@@ -83,6 +128,21 @@ class SysBooking():
             """
             cursor.execute(query)
             return cursor.fetchall()
+        except sqlite3.Error as e:
+            print(f"SQL error: {e}")
+            return None
+        finally:
+            conn.close()
+
+
+    # Get Payment amount by ID
+    def get_amount(self, BookID):
+        conn = create_connection()
+        cursor = conn.cursor()
+        try:
+        
+            cursor.execute("SELECT (JULIANDAY(T1.EndDate) - JULIANDAY(T1.StartDate)) * T2.DailyRate AS Amount FROM SysBooking AS T1 INNER JOIN SysCar AS T2 ON T1.CarID = T2.CarID WHERE T1.BookID = ?", (BookID,))
+            return cursor.fetchone()
         except sqlite3.Error as e:
             print(f"SQL error: {e}")
             return None

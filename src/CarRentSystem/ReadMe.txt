@@ -83,7 +83,7 @@ CarRentSystem/
 # Main Folders/Files
 
 - main.py — # Entry point to the system. CLI menus for registration/login, car browsing, booking, payments.
-- database.py — # Creates tables on first run. Create automatically admin account, if admin account not exisist. Login for admin -> Email : admin@sysrent.com/Pw : admin123 
+- database.py — # Creates tables on first run. Create automatically admin account, if admin account not exisist. Login for admin -> Email : admin@sysrent.com, Password : admin123. I registered customer for Testing. Email : john@gmail.com, Password : zxc   
 - Control/ — # services/controllers file folder. Application business logic and validations include here.
   - UserCont.py # User registration, User login/Authentication , User Role allocation
   - CarCont.py  # view,add,update,delete cars
